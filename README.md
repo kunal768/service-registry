@@ -9,6 +9,10 @@ This repo demonstrates a minimal **service discovery** flow:
 
 Inspired by the service-registry idea from the template repo: [ranjanr/ServiceRegistry](https://github.com/ranjanr/ServiceRegistry)
 
+## Architecture diagram 
+
+![Architecture](public/plantuml.svg)
+
 ## Setup
 
 ### Prerequisites
@@ -31,6 +35,9 @@ pip install -r requirements.txt
 source .venv/bin/activate
 uvicorn registry.app:app --host 0.0.0.0 --port 5001
 ```
+
+
+![Registry Running](public/01-registry-running.png)
 
 Registry endpoints:
 - `GET http://localhost:5001/health`
@@ -65,6 +72,9 @@ SERVICE_NAME=echo-service INSTANCE_ID=svc-2 PORT=8002 REGISTRY_URL=http://localh
   uvicorn service.app:app --host 0.0.0.0 --port 8002
 ```
 
+
+![Two Instances](public/02-two-instances-running.png)
+
 Service endpoints (either instance):
 - `GET http://localhost:8001/health`
 - `GET http://localhost:8001/work`
@@ -90,6 +100,9 @@ python3 client/client.py --registry-url http://localhost:5001 --service echo-ser
 
 Expected output (example): the `chosen=` address should switch between `8001` and `8002` over multiple calls.
 
+
+![Client Calls Random Instance](public/04-client-random-calls.png)
+
 ## Test the registry using curl (in addition to the client)
 
 Once both service instances are running, you can verify discovery via curl:
@@ -101,6 +114,9 @@ curl -s http://localhost:5001/services | python3 -m json.tool
 # Discover instances for echo-service
 curl -s http://localhost:5001/discover/echo-service | python3 -m json.tool
 ```
+
+
+![Services Registered](public/03-services-registered.png)
 
 You can also manually register/deregister an instance (optional):
 
@@ -116,25 +132,4 @@ curl -s -X POST http://localhost:5001/deregister \
   -d '{"service":"echo-service","address":"http://localhost:9000"}' | python3 -m json.tool
 ```
 
-## Architecture diagram 
-
-![Architecture](public/plantuml.svg)
-
-## Screenshots placeholders (add to `public/`)
-
-Create screenshots for the following scenarios and place them in `public/`:
-
-1. **Registry running** (health endpoint / logs)\n   - `public/01-registry-running.png`
-2. **Two instances running** (both terminals / logs)\n   - `public/02-two-instances-running.png`
-3. **Services registered** (e.g. `GET /services` output)\n   - `public/03-services-registered.png`
-4. **Client discovers + calls random instance** (client output showing alternating chosen instances)\n   - `public/04-client-random-calls.png`
-
-Then embed them here (uncomment after adding files):
-
-<!--
-![Registry Running](public/01-registry-running.png)
-![Two Instances](public/02-two-instances-running.png)
-![Services Registered](public/03-services-registered.png)
-![Client Calls Random Instance](public/04-client-random-calls.png)
--->
-
+![Services Register-Deregister](public/05-service-register-deregister.png)
