@@ -11,26 +11,9 @@ Inspired by the service-registry idea from the template repo: [ranjanr/ServiceRe
 
 ## Architecture diagram
 
-![Architecture](public/plantuml.svg)
+![Architecture](public/architecture.png)
 
-### Architecture (PlantUML)
 
-```plantuml
-@startuml
-title Service Discovery in Minikube
-
-node "Discovery Client Job" as Client
-node "Service Registry" as Registry
-node "User Service (replicas=2)" as UserService
-
-UserService --> Registry : POST /register
-UserService --> Registry : POST /heartbeat (periodic)
-
-Client --> Registry : GET /discover/user-service
-Client --> UserService : GET /ping (random instance)
-
-@enduml
-```
 
 ## Prerequisites
 
@@ -133,7 +116,7 @@ Inspired by the service-registry idea from the template repo: [ranjanr/ServiceRe
 
 ## Architecture diagram 
 
-![Architecture](public/plantuml.svg)
+![Architecture](public/architecture.png)
 
 ## Setup
 
