@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: discovery-client
+  labels:
+    app: discovery-client
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: discovery-client
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: client
+          image: service-registry:latest
+          imagePullPolicy: Never
+          command: ["python", "client/client.py"]
+          args: ["--service", "user-service", "--calls", "6", "--delay-seconds", "1.0"]
+          env:
+            - name: REGISTRY_URL
+              value: "http://service-registry:5001"
+            - name: PYTHONUNBUFFERED
+              value: "1"
+
