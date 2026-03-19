@@ -39,7 +39,7 @@ Then start Docker Desktop once so the Docker daemon is running.
 make up
 ```
 
-![make up](public/make up.png)
+![make up](public/make-up.png)
 
 ## Verify service instances are running
 
@@ -47,8 +47,8 @@ make up
 kubectl get pods -l app=user-service -o wide
 ```
 
-![verify running](public/verify running.png)
-![check running services](public/check running services.png)
+![verify running](public/verify-running.png)
+![check running services](public/check-running-services.png)
 
 ## Verify registry discovery (curl)
 
@@ -58,7 +58,7 @@ Start a port-forward to the registry Service (keep it running while you test):
 kubectl port-forward service/service-registry 5001:5001
 ```
 
-![first port forwarding](public/first port forwarding.png)
+![first port forwarding](public/first-port-forwarding.png)
 
 In another terminal, run:
 
@@ -70,9 +70,9 @@ curl -s http://localhost:5001/discover/user-service | python3 -m json.tool
 
 Expected: `"count": 2` and two distinct pod IP addresses for `user-service`.
 
-![register a service](public/register a service.png)
-![discover user services](public/discover user services.png)
-![discover services after registering](public/discover services after registering.png)
+![register a service](public/register-a-service.png)
+![discover user services](public/discover-user-services.png)
+![discover services after registering](public/discover-services-after-registering.png)
 
 ## Call a random instance (client Job)
 
@@ -83,8 +83,8 @@ make client
 make logs
 ```
 
-![run client](public/run client.png)
-![fetch client logs](public/fetch client logs.png)
+![run client](public/run-client.png)
+![fetch client logs](public/fetch-client-logs.png)
 
 Expected: client logs should show discovery returning 2 instances and a random selected `chosen` address, followed by a `/ping` JSON response.
 
@@ -97,7 +97,7 @@ kubectl port-forward service/user-service 8001:8001
 curl -s http://localhost:8001/ping | python3 -m json.tool
 ```
 
-![ping a user service](public/ping a user service.png)
+![ping a user service](public/ping-a-user-service.png)
 
 ## Optional: manual register/deregister (registry curl)
 
